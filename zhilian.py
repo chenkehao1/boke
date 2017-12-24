@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#https://sou.zhaopin.com/jobs/searchresult.ashx?jl=%E9%9D%92%E5%B2%9B&kw=python&sm=0&p=1
 import scrapy
 import urllib.parse
 from scrapy.http import Request
@@ -8,12 +7,15 @@ ssl._create_default_https_context = ssl._create_unverified_context
 import re
 import urllib.request
 from qiouzhi.items import  QiouzhiItem
+
+
 class ZhilianSpider(scrapy.Spider):
     name = 'zhilian'
     allowed_domains = ['zhaopin.com']
     cs=urllib.parse.quote('选择地区')#如果要找全国就输‘选择地区’
     gz=urllib.parse.quote('python')
     y=1
+    
     headers= {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
    'Accept-Language':'zh-CN,zh;q=0.8',
     'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
@@ -21,9 +23,11 @@ class ZhilianSpider(scrapy.Spider):
    }
     url='https://sou.zhaopin.com/jobs/searchresult.ashx?jl='+cs+'&kw='+gz+'&sm=0&p='
 
+    
     def start_requests(self):
         yield Request(url=self.url+str(1),headers= self.headers)
-   # start_urls = ('https://sou.zhaopin.com/jobs/searchresult.ashx?jl=%E9%9D%92%E5%B2%9B&kw=python&sm=0&p=1')
+    
+    
     def parse(self,response):
         item=QiouzhiItem()
         '''
